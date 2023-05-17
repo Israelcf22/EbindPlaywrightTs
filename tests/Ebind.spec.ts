@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test';
-//const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 test.use({
   ignoreHTTPSErrors: true

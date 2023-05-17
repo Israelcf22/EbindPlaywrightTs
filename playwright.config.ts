@@ -16,7 +16,7 @@ export default defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0, //El primer numero indica que en CI(Jenkins, Github Actios etc)va a intentar 2 veces en caso de fallar y el segundo numero es para reintentos locales
+  retries: process.env.CI ? 2 : 1, //El primer numero indica que en CI(Jenkins, Github Actios etc)va a intentar 2 veces en caso de fallar y el segundo numero es para reintentos locales
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined, //la cantidad de workers que van a trabjar en CI, si la plataforma de CI soporta parallel execution se puede modificar y el segundo define los workers locales, esta asi para usar los maximos posibles
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
