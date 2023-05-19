@@ -16,7 +16,7 @@ export default defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 1, //El primer numero indica que en CI(Jenkins, Github Actios etc)va a intentar 2 veces en caso de fallar y el segundo numero es para reintentos locales
+  retries: process.env.CI ? 1 : 1, //El primer numero indica que en CI(Jenkins, Github Actios etc)va a intentar 2 veces en caso de fallar y el segundo numero es para reintentos locales
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined, //la cantidad de workers que van a trabjar en CI, si la plataforma de CI soporta parallel execution se puede modificar y el segundo define los workers locales, esta asi para usar los maximos posibles
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
@@ -27,7 +27,12 @@ export default defineConfig({
     // baseURL: 'http://127.0.0.1:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: 'on',  
+    //A continuacion los comandos y funciones que puedes cambiar entre esas comillas:
+    // 'off - Do not record a trace.
+    // 'on' - Record a trace for each test
+    // 'retain-on-failure' - Record a trace for each test, but remove it from successful test runs.
+    // 'on-first-retry' - Record a trace only when retrying a test for the first
   },
 
   /* Configure projects for major browsers */
@@ -37,15 +42,15 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
 
     /* Test against mobile viewports. */
     // {
