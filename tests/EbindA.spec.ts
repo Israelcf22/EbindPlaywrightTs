@@ -47,8 +47,9 @@ test.describe('', () => {
       console.log('Dato1:', afiliacion);
       console.log('Dato2:', cuenta);
       console.log('Dato3:', autorizacion);
+      
+      
       // Aquí falta agregar lógica para cada iteración
-
       // Validar presencia de elementos
       const elementsToClick = [  //Validar el orden en el que aparecen de izquierda a derecha
         'Emisor',
@@ -69,7 +70,6 @@ test.describe('', () => {
         'close',
         'Expandir',
       ];
-
       let allElementsPresent = true;
 
       for (const element of elementsToClick) {

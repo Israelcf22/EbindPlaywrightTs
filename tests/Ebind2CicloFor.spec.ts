@@ -8,13 +8,12 @@ test.describe('Ebind2', () => {
     //Log In
     await page.goto('https://ebindqaem-app2.eglobal.com.mx/');
     await page.getByText('Ir a inicio de sesión').click();
-    await page.getByPlaceholder('User Name').fill('Socejo');
-    await page.getByPlaceholder('Password').fill('T35t1n6B0_25*');
+    await page.getByPlaceholder('User Name').fill('icarrazco');
+    await page.getByPlaceholder('Password').fill('T35t1n6B0_23*');
     await page.getByRole('button', { name: 'Log in' }).click();
     
     //Camino al Módulo a probar
     //await page.waitForSelector('more_horiz');
-    
     await page.getByText('more_horiz').click(); 
     await page.waitForSelector('.q-icon.ebind-icons.icon-consulta-log');
     await page.click('.q-icon.ebind-icons.icon-consulta-log');
@@ -31,14 +30,14 @@ test.describe('Ebind2', () => {
       const cuenta = worksheet['D' + i].w;
       const autorizacion = worksheet['E' + i].w;
       console.log()
-      //await page.locator('form').getByText('arrow_drop_down').click();
-      //await page.getByText('CITI BANAMEX').click();
+      await page.locator('form').getByText('arrow_drop_down').click();
+      await page.getByText('CITI BANAMEX').click();
       await page.getByLabel('Fecha de transacción inicial*').fill(fecha);
       await page.getByLabel('Fecha de transacción final*').fill(fecha);
       await page.getByLabel('Afiliación').fill(afiliacion);
       await page.getByRole('textbox', { name: 'Número de cuenta*' }).fill(cuenta);
       await page.getByLabel('Número de autorización').fill(autorizacion);
-      //await page.getByRole('button', { name: 'Consultar' }).click();
+      await page.getByRole('button', { name: 'Consultar' }).click();
       console.log('Fecha:', fecha);
       console.log('Dato1:', afiliacion);
       console.log('Dato2:', cuenta);
