@@ -13,25 +13,28 @@ test.describe('Ebind2', () => {
     await page.getByRole('button', { name: 'Log in' }).click();
     
     //Camino al Módulo a probar
-    //await page.waitForSelector('more_horiz');
     await page.getByText('more_horiz').click(); 
     await page.waitForSelector('.q-icon.ebind-icons.icon-consulta-log');
     await page.click('.q-icon.ebind-icons.icon-consulta-log');
     
     //Preparando Matriz con información del Excell
-    const filePath = 'C:/Users/icf2303/Documents/Matriz/insumo.xlsx';
+    const filePath = './resources/insumo.xlsx';
     const workbook = XLSX.readFile(filePath);
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
     
+    // Matriz para almacenar los resultados
+    const resultados: number[][] = [];
+    console.log('Matriz Resultados:',resultados);
     //Iterando los registros del excell en el formulario
     for (let i = 2; i <= 6; i++) {
+      const banco =  worksheet['B' + i].w;
       const fecha = worksheet['F' + i].w;
       const afiliacion = worksheet['C' + i].w;
       const cuenta = worksheet['D' + i].w;
       const autorizacion = worksheet['E' + i].w;
-      console.log()
+
       await page.locator('form').getByText('arrow_drop_down').click();
-      await page.getByText('CITI BANAMEX').click();
+      await page.locator(`//div[text()='${banco}']`).click();
       await page.getByLabel('Fecha de transacción inicial*').fill(fecha);
       await page.getByLabel('Fecha de transacción final*').fill(fecha);
       await page.getByLabel('Afiliación').fill(afiliacion);
@@ -42,7 +45,36 @@ test.describe('Ebind2', () => {
       console.log('Dato1:', afiliacion);
       console.log('Dato2:', cuenta);
       console.log('Dato3:', autorizacion);
-      // Aqui falta agregar lógica para cada iteracion
+      
+      const elementsToClick = [  //Validar el orden en el que aparecen de izquierda a derecha
+        'Emisor',
+        'Fecha transacción',
+        'Hora transacción',
+        'Número cuenta',
+        'FPAN',
+        'Tipo producto',
+        'Comercio',
+        'Número autorización',
+        'Adquirente',
+        'Monto transacción',
+        'Código respuesta',
+        'Código transacción',
+        'Tipo transacción',
+        'Documentación',
+        'close',
+        'Expandir'
+      ];
+      let allElementsPresent = true;
+
+      
+      for (const element of elementsToClick) {
+        const locator = page.getByRole('cell', { name: element });
+        if (!(await locator.isVisible())) {
+          allElementsPresent = false;
+          break;
+        }
+      }
+      resultados.push([allElementsPresent ? 1 : 0]);
     }
       //Cerrar Sesion
       // await page.getByRole('banner').getByRole('button', { name: 'Expandir' }).click();
@@ -51,3 +83,6 @@ test.describe('Ebind2', () => {
 });
 //icarrazco  T35t1n6B0_23*
 // Socejo T35t1n6B0_25*
+
+
+        
